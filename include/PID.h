@@ -35,8 +35,8 @@ class PID
 {
 private:
 	float P, I;
-	float currentTime;
-	float previousPIDTime;
+	std::chrono::time_point<std::chrono::high_resolution_clock> currentTime;
+	std::chrono::time_point<std::chrono::high_resolution_clock> previousPIDTime;
 	float integratedError;
 	float windupGuard;
 
