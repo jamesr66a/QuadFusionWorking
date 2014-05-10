@@ -30,6 +30,30 @@
 
 #include <chrono.h>
 
+
+class PID
+{
+Private:
+	float P, I;
+	float currentTime;
+	float previousPIDTime;
+	float integratedError;
+	float windupGuard;
+
+Public:
+	PID();
+	float updatePID(float targetPosition, float currentPosition); 
+	float constrain(float a, float x, float y);
+	void zeroIntegralError();
+	float getCurrentTime();
+};
+
+
+#endif // _AQ_PID_H_
+
+
+
+/*
 float currentTime;
 bool inFlight;
 enum {
@@ -130,6 +154,4 @@ void initPID(){
 
 
 
-
-#endif // _AQ_PID_H_
-
+*/
