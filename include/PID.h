@@ -28,19 +28,19 @@
 #ifndef _AQ_PID_H_
 #define _AQ_PID_H_
 
-#include <chrono.h>
+#include <chrono>
 
 
 class PID
 {
-Private:
+private:
 	float P, I;
 	float currentTime;
 	float previousPIDTime;
 	float integratedError;
 	float windupGuard;
 
-Public:
+public:
 	PID();
 	float updatePID(float targetPosition, float currentPosition); 
 	float constrain(float a, float x, float y);

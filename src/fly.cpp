@@ -20,29 +20,29 @@ int main()
     std::thread ofs_thread(&OpticalFlowSensor::loop, &ofs, "/dev/ttyO0");
 	
     float x = 0, y = 0;
-    float setPointX=0, setPointY=0, setPointZ=0;
-    bool prevFlightStatus=false, firstRead=true;
-    float pidRoll, pidPitch, pidThrottle;
+    //float setPointX=0, setPointY=0, setPointZ=0;
+    //bool prevFlightStatus=false, firstRead=true;
+    //float pidRoll, pidPitch, pidThrottle;
 
     
-    initPID();
+    //initPID();
 
-    initGPIO(16,false);
-    writeGPIO(16, true);
-    initGPIO(17,true);
+    //initGPIO(16,false);
+    //writeGPIO(16, true);
+    //initGPIO(17,true);
 
     while (true)
     {
-        if(readGPIO(17)=='1') inFlight=true;
-        if(readGPIO(17)=='0') inFlight=false;
+        //if(readGPIO(17)=='1') inFlight=true;
+        //if(readGPIO(17)=='0') inFlight=false;
         
-	if(prevFlightStatus!=inFlight){
-		setPointX=x;
-		setPointY=y;
+	//if(prevFlightStatus!=inFlight){
+	//	setPointX=x;
+	//	setPointY=y;
 
-	}
+	//}
 	
-	prevFlightStatus=inFlight;
+	//prevFlightStatus=inFlight;
 	
 
 	FlowData fd;
@@ -56,7 +56,7 @@ int main()
 	    //	      << std::endl;
 	    x += fd.flow_x;
 	    y += fd.flow_y;
-	    std::cout << x << " " << y << " " << gd.ground_distance << std::endl;
+	    std::cout << x << " " << y << " " << fd.ground_distance << std::endl;
 	    //std::cout << std::chrono::nanoseconds(dt).count()/10e6 << std::endl;
 	}
 	if (cpe.dataAvailable())
@@ -66,15 +66,15 @@ int main()
 	    x = pose.x;
    	    y = pose.y;
 	    
-            if(firstRead){
+            //if(firstRead){
 		
-	        currentTime=getCurrentTime();
+	     //   currentTime=getCurrentTime();
 
-		firstRead=false;
+		//firstRead=false;
 
-	    }
-	    pidPitch=updatePID(setPointX,x,&PID[PITCH]);
-            pidRoll=updatePID(setPointY,y,&PID[ROLL]);
+	    //}
+	    //pidPitch=updatePID(setPointX,x,&PID[PITCH]);
+            //pidRoll=updatePID(setPointY,y,&PID[ROLL]);
 
 	    /*TODO: get PID for throttle and then do
 	     1500+ constrain stuff. 
