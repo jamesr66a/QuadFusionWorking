@@ -73,7 +73,7 @@ void PID::zeroIntegralError()
 	previousPIDTime = currentTime;
 }
 
-float getCurrentTime()
+float PID::getCurrentTime()
 {
 	return currentTime;
 }
