@@ -12,7 +12,7 @@ PID::PID()
 	previousPIDTime = getCurrentTime();
 }
 
-void PID::PID(float P, float I, float windupGuard){
+PID::PID(float P, float I, float windupGuard){
 	this->P=P;
 	this->I=I
 	this->windupGuard=windupGuard;
