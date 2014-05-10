@@ -8,8 +8,6 @@
 #include "PID.h"
 #include "GPIO.h"
 
-float constain(float a, float x, float y);
-void initPID();
 
 int main()
 {
