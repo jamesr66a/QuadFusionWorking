@@ -5,6 +5,11 @@ false=out
 true=in
 */
 
+#include <unistd.h>
+#include <cstdlib>
+#include <cstdio>
+#include <fcntl.h>
+#include <cstring>
 
 void initGPIO(int gpioNum, bool direction){ 
   int fd;
@@ -20,13 +25,13 @@ void initGPIO(int gpioNum, bool direction){
 
     close(fd);
 
-    sprintf(buf, "/sys/class/gpio/gpio%d/direction",gpio);
+    sprintf(buf, "/sys/class/gpio/gpio%d/direction",gpioNum);
     fd=open(buf, O_WRONLY);
     if(direction) write(fd, "in", 2);
     if(!direction) write(fd, "out", 3);
     close(fd);
 
-  }`
+  }
 }
 
 char readGPIO(int gpioNum){
@@ -35,7 +40,7 @@ char readGPIO(int gpioNum){
 
   sprintf(buf, "/sys/class/gpio/gpio%d/value",gpioNum);
 
-  fd=open(buf, O_RDONLY);
+  int fd=open(buf, O_RDONLY);
   if(fd==-1) printf("Error");
   
   else{
@@ -54,7 +59,7 @@ void writeGPIO(int gpioNum, bool gpioStatus){
   
   sprintf(buf, "/sys/class/gpio/gpio%d/value",gpioNum);
 
-  fd=open(buf, O_WRONLY);
+  int fd=open(buf, O_WRONLY);
   if(fd==-1) printf("Error");
 
   else{
