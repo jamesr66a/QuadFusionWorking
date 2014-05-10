@@ -12,6 +12,15 @@ PID::PID()
 	previousPIDTime = getCurrentTime();
 }
 
+PID::PID(float P, float I, float windupGuard){
+	this->P=P;
+	this->I=I
+	this->windupGuard=windupGuard;
+	currentTime=getCurrentTime();
+	previousPIDTime=getCurrentTime();
+	
+}
+
 float PID::updatePID(float targetPosition, float currentPosition)
 {
 	currentTime = getCurrentTime();
