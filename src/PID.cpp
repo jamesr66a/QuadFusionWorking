@@ -8,8 +8,8 @@ PID::PID()
 	P = 1;
 	I = 1;
 	windupGuard = 100;
-	currentTime = getCurrentTime();
-	previousPIDTime = getCurrentTime();
+	currentTime = std::chrono::high_resolution_clock::now();
+	previousPIDTime = currentTime;
 }
 
 void PID::setI(float I){
@@ -26,8 +26,10 @@ void PID::setWindupGuard(float windupGuard){
 
 float PID::updatePID(float targetPosition, float currentPosition, bool inFlight)
 {
-	currentTime = getCurrentTime();
-	const float deltaPIDTime = (currentTime - previousPIDTime) / 1000000.0;
+	currentTime = std::chrono::high_resolution_clock::now();
+	//std::chrono::time_point deltaPIDTime = (currentTime - previousPIDTime);
+	
+	float deltaPIDTime=(std::chrono::duration_cast<std::chrono::microseconds>(currentTime-previousPIDTime).count())/100000.0;
 
 	previousPIDTime = currentTime;
 	float error = targetPosition - currentPosition;
@@ -70,7 +72,5 @@ void PID::zeroIntegralError()
 
 float getCurrentTime()
 {
-	auto tpCurrent = std::chrono::high_resolution_clock::now();
-
-	return std::chrono::milliseconds(tpCurrent).count();
+	return currentTime;
 }
