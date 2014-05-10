@@ -45,7 +45,7 @@ public:
 	float updatePID(float targetPosition, float currentPosition, bool inFlight); 
 	float constrain(float a, float x, float y);
 	void zeroIntegralError();
-	float getCurrentTime();
+	//float getCurrentTime();
 	void setI(float I);
 	void setP(float P);
 	void setWindupGuard(float windupGuard);
