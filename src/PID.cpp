@@ -21,7 +21,7 @@ PID::PID(float P, float I, float windupGuard){
 	
 }
 
-float PID::updatePID(float targetPosition, float currentPosition)
+float PID::updatePID(float targetPosition, float currentPosition, bool inFlight)
 {
 	currentTime = getCurrentTime();
 	const float deltaPIDTime = (currentTime - previousPIDTime) / 1000000.0;
