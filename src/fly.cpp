@@ -19,7 +19,7 @@ int main()
     std::thread cpe_thread(&CameraPoseEstimator::continuousRead, &cpe);
     std::thread ofs_thread(&OpticalFlowSensor::loop, &ofs, "/dev/ttyO0");
 	
-    //float x = 0, y = 0;
+    float x = 0, y = 0;
     //float setPointX=0, setPointY=0, setPointZ=0;
     //bool prevFlightStatus=false, firstRead=true;
     //float pidRoll, pidPitch, pidThrottle;
@@ -56,7 +56,7 @@ int main()
 	    //	      << std::endl;
 	    x += fd.flow_x;
 	    y += fd.flow_y;
-	    std::cout <<"X: "<< x <<"cm"<< " Y:" << y << "cm Z: " << gd.ground_distance<<"m" << std::endl;
+	    std::cout <<"X: "<< x <<"cm"<< " Y:" << y << "cm Z: " << fd.ground_distance<<"m" << std::endl;
 	    //std::cout << std::chrono::nanoseconds(dt).count()/10e6 << std::endl;
 	}
 	if (cpe.dataAvailable())
