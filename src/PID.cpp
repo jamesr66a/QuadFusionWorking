@@ -1,6 +1,7 @@
 
 #include "PID.h"
 #include <chrono>
+#include <iostream>
 
 
 PID::PID()
@@ -30,6 +31,8 @@ float PID::updatePID(float targetPosition, float currentPosition, bool inFlight)
 	//std::chrono::time_point deltaPIDTime = (currentTime - previousPIDTime);
 	
 	float deltaPIDTime=(std::chrono::duration_cast<std::chrono::microseconds>(currentTime-previousPIDTime).count())/100000.0;
+	
+	std::cout<<deltaPIDTime;
 
 	previousPIDTime = currentTime;
 	float error = targetPosition - currentPosition;
