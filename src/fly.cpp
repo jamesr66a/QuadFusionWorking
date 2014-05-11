@@ -14,13 +14,13 @@ int main()
     CameraPoseEstimator cpe;
     OpticalFlowSensor ofs;
 
-    initGPIO(186, true);
+    initGPIO(10, true);
 
     std::thread cpe_thread(&CameraPoseEstimator::continuousRead, &cpe);
-    std::thread ofs_thread(&OpticalFlowSensor::loop, &ofs, "/dev/ttyO0");
+    std::thread ofs_thread(&OpticalFlowSensor::loop, &ofs, std::string("/dev/ttyO0"));
 	
     float x = 0, y = 0, z = 0;
-
+    
     PID Pitch, Roll, Throttle;
     float setPointX=0, setPointY=0, setPointZ=0;
     bool inFlight = false, prevFlightStatus=false, firstRead=true;
@@ -35,8 +35,8 @@ int main()
 
     while (true)
     {
-        if(readGPIO(186)=='1') inFlight=true;
-        if(readGPIO(186)=='0') inFlight=false;
+        if(readGPIO(10)=='1') inFlight=true;
+        if(readGPIO(10)=='0') inFlight=false;
         
 	if(inFlight == true && prevFlightStatus == false)
 	{
@@ -88,10 +88,10 @@ int main()
 	    */	   
 	}
 	
-	std::cout <<"X: "<< x <<"cm"<< " Y:" << y << "cm Z: " << z.ground_distance<<"m";
+	//std::cout <<"X: "<< x <<" cm"<< " Y:" << y << " cm Z: " << z <<" m" << std::ends;
 	std::cout << Pitch.updatePID(setPointX, x, inFlight);
 	std::cout << Roll.updatePID(setPointY, y, inFlight);
-	std::cout << Throttle.updatePID(setPointZ, z, inFlight);
+	std::cout << Throttle.updatePID(setPointZ, z, inFlight) << std::endl;
 
 	std::this_thread::sleep_for(std::chrono::milliseconds(5));
     }

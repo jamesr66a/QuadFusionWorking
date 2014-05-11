@@ -1,70 +1,28 @@
-#include "GPIO.h"
-/*
-Direction:
-false=out
-true=in
-*/
+#include <fstream>
+#include <string>
 
-#include <unistd.h>
-#include <cstdlib>
-#include <cstdio>
-#include <fcntl.h>
-#include <cstring>
-
-void initGPIO(int gpioNum, bool direction){ 
-  int fd;
-  char buf[25];
-  
-  fd=open("/sys/class/gpio/export", O_WRONLY);
-  if(fd==-1) printf("Error");  
- 
-  else{ 
-    sprintf(buf,"%d",gpioNum);
-
-    write(fd,buf,strlen(buf));
-
-    close(fd);
-
-    sprintf(buf, "/sys/class/gpio/gpio%d/direction",gpioNum);
-    fd=open(buf, O_WRONLY);
-    if(direction) write(fd, "in", 2);
-    if(!direction) write(fd, "out", 3);
-    close(fd);
-
-  }
+void initGPIO(int gpioNum, bool direction)
+{
+	std::ofstream export_ofs("/sys/class/gpio/export");
+	export_ofs << std::to_string(gpioNum);
+	export_ofs.close();
+	
+	std::string gpio_direction_file = std::string("/sys/class/gpio") + std::to_string(gpioNum) + std::string("/direction");
+	
+	std::ofstream direction_ofs(gpio_direction_file);
+	direction_ofs << (direction ? "in" : "out") << std::endl;
+	direction_ofs.close();
 }
 
-char readGPIO(int gpioNum){
-  char retVal;
-  char buf[25];
+char readGPIO(int gpioNum)
+{
+	char return_val;
 
-  sprintf(buf, "/sys/class/gpio/gpio%d/value",gpioNum);
+	std::string filename = std::string("/sys/class/gpio") + std::to_string(gpioNum) + std::string("/value");
 
-  int fd=open(buf, O_RDONLY);
-  if(fd==-1) printf("Error");
-  
-  else{
-    read(fd,&retVal,1);
-    close(fd);
-  }
-  return retVal;
-}
-/*
-gpioStatus:
-true: write 1
-flase: write 0
-*/
-void writeGPIO(int gpioNum, bool gpioStatus){
-  char buf[25];
-  
-  sprintf(buf, "/sys/class/gpio/gpio%d/value",gpioNum);
-
-  int fd=open(buf, O_WRONLY);
-  if(fd==-1) printf("Error");
-
-  else{
-    if(gpioStatus) write(fd, "1", 1);
-    if(!gpioStatus) write(fd, "0", 1);
-    close(fd);
-  }
+	std::ifstream value_ifs(filename);
+	value_ifs >> return_val;
+	value_ifs.close();	
+	
+	return return_val;
 }

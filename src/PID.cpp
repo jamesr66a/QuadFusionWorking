@@ -4,12 +4,12 @@
 #include <iostream>
 
 
-PID::PID()
+PID::PID() : P(1), I(1)
 {
-	P = 1;
-	I = 1;
 	windupGuard = 100;
+	//std::cout << "init current time" << std::endl;
 	currentTime = std::chrono::high_resolution_clock::now();
+	//std::cout << "init previous time" << std::endl;
 	previousPIDTime = currentTime;
 }
 

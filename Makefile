@@ -22,5 +22,10 @@ TAG_LIBS=-lopencv_core\
       -lopencv_video\
       -lopencv_nonfree
 
-fly: src/fly.cpp include/SquarePattern.h include/StoredPatterns.h include/cameraPoseEstimator.h include/econ.h include/findPose.h optical_flow
-	g++ --std=c++11 -Iinclude $(TAG_INCLUDE_FILES) $(TAG_LIBRARY_FILES) -o ./fly src/fly.cpp obj/optical_flow.o  $(TAG_LIBS) -lpthread
+fly: src/fly.cpp include/SquarePattern.h include/StoredPatterns.h include/cameraPoseEstimator.h include/econ.h include/findPose.h optical_flow PID GPIO
+	g++ --std=c++11 -Iinclude $(TAG_INCLUDE_FILES) $(TAG_LIBRARY_FILES) -o ./fly src/fly.cpp obj/optical_flow.o obj/PID.o obj/GPIO.o  $(TAG_LIBS) -lpthread
+
+PID : src/PID.cpp include/PID.h
+	g++ --std=c++11 -Iinclude -c src/PID.cpp -o obj/PID.o
+GPIO: include/GPIO.h src/GPIO.cpp
+	g++ --std=c++11 -Iinclude -o obj/GPIO.o -c src/GPIO.cpp
