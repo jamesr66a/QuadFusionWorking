@@ -29,7 +29,7 @@ int main()
     float setPointX=0, setPointY=0, setPointZ=0;
     bool inFlight = false, prevFlightStatus=false, firstRead=true;
     std::ofstream PWM8("/dev/pwm8");
-    std::ofstream PWM0("/dev/pwm9");
+    std::ofstream PWM9("/dev/pwm9");
     std::ofstream PWM10("/dev/pwm10");
     std::ofstream PWM11("/dev/pwm11");
     //float pidRoll, pidPitch, pidThrottle;
