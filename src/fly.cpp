@@ -40,6 +40,8 @@ int main()
     float rollError=0, pitchError=0, throttleError=0;
     
     PID Pitch, Roll, Throttle;
+    Pitch.setP(10);
+    Roll.setP(10);
     Throttle.setPwmOut(10000);
     float setPointX=0, setPointY=0, setPointZ=0;
     bool inFlight = false, prevFlightStatus=false, firstRead=true;
@@ -66,6 +68,8 @@ int main()
 		setPointX=x;
 		setPointY=y;
 		setPointZ = z;
+		Pitch.zeroIntegralError();
+		Roll.zeroIntegralError();
 	}
 	
 	prevFlightStatus=inFlight;
@@ -115,8 +119,8 @@ int main()
 	 rollError=Roll.updatePID(setPointY, y, inFlight);
 	 throttleError=Throttle.updatePID(setPointZ, z, inFlight);
 	 
-	 Pitch.setPwmOut(constrain((Pitch.getPwmOut()+(pitchError*100)),14000,15000));
-	 Roll.setPwmOut(constrain((Roll.getPwmOut()+(rollError*100)),14000,15000));
+	 //Pitch.setPwmOut(constrain((Pitch.getPwmOut()+(pitchError*100)),14000,15000));
+	 //Roll.setPwmOut(constrain((Roll.getPwmOut()+(rollError*100)),14000,15000));
 	 //Throttle.setPwmOut(constrain((Throttle.getPwmOut()+(throttleError*100)),1000,2000));
 	 //PW8<<Throttle.getPwmOut();
 	 
@@ -124,8 +128,8 @@ int main()
 	 PWM10<<Pitch.getPwmOut();
 	 
 	 
-	 cout<<"Roll: "<<Roll.getPwmOut()<<"\t";
-	 cout<<"Pitch: "<<Pitch.getPwmOut()<<std::endl;
+	 std::cout<<"Roll: "<<Roll.getPwmOut()<<"\t";
+	 std::cout<<"Pitch: "<<Pitch.getPwmOut()<<std::endl;
 	
 	//std::cout <<"X: "<< x <<" cm"<< " Y:" << y << " cm Z: " << z <<" m" << std::ends;
 	//std::cout << std::setw(10) << pitchError << " " << std::setw(10) << rollError << " " << std::setw(10) << throttleError << std::endl;
