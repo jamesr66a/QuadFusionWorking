@@ -25,6 +25,7 @@ int main()
     float rollError=0, pitchError=0, throttleError=0;
     
     PID Pitch, Roll, Throttle;
+    Throttle.setPwmOut(10000);
     float setPointX=0, setPointY=0, setPointZ=0;
     bool inFlight = false, prevFlightStatus=false, firstRead=true;
     std::ofstream PWM8("/dev/pwm8");
@@ -99,7 +100,12 @@ int main()
 	 rollError=Roll.updatePID(setPointY, y, inFlight);
 	 throttleError=Throttle.updatePID(setPointZ, z, inFlight);
 	 
-	 
+	 Pitch.setPwmOut(Pitch.getPwmOut()+(pitchError*100));
+	 Roll.setPwmOut(Roll.getPwmOut()+(rollError*100));
+	 //Throttle.setPwmOut(Throttle.getPwmOut()+(throttleError*100));
+	 //PW8<<Throttle.getPwmOut();
+	 PWM9<<Roll.getPwmOut();
+	 PWM10<<Pitch.getPwmOut();
 	 
 	
 	//std::cout <<"X: "<< x <<" cm"<< " Y:" << y << " cm Z: " << z <<" m" << std::ends;
