@@ -107,9 +107,12 @@ int main()
 	 PWM9<<Roll.getPwmOut();
 	 PWM10<<Pitch.getPwmOut();
 	 
+	 
+	 cout<<"Roll: "<<Roll.getPwmOut()<<"\t";
+	 cout<<"Pitch: "<<Pitch.getPwmOut()<<std::endl;
 	
-	std::cout <<"X: "<< x <<" cm"<< " Y:" << y << " cm Z: " << z <<" m" << std::ends;
-	std::cout << std::setw(10) << pitchError << " " << std::setw(10) << rollError << " " << std::setw(10) << throttleError << std::endl;
+	//std::cout <<"X: "<< x <<" cm"<< " Y:" << y << " cm Z: " << z <<" m" << std::ends;
+	//std::cout << std::setw(10) << pitchError << " " << std::setw(10) << rollError << " " << std::setw(10) << throttleError << std::endl;
 
 	std::this_thread::sleep_for(std::chrono::milliseconds(5));
     }
