@@ -57,7 +57,7 @@ float PID::updatePID(float targetPosition, float currentPosition, bool inFlight)
 
 	integratedError = constrain(integratedError, -windupGuard, windupGuard);
 	
-	pwmOut = 15000 + constrain(P*error + I*integratedError, -1000, 1000);
+	pwmOut = constrain(P*error + I*integratedError, -1000, 1000);
 	return P * error + I * integratedError;
 }
 
