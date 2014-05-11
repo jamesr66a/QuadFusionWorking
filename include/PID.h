@@ -39,6 +39,7 @@ private:
 	std::chrono::time_point<std::chrono::high_resolution_clock> previousPIDTime;
 	float integratedError;
 	float windupGuard;
+	int pwmOut;
 
 public:
 	PID();
@@ -49,6 +50,8 @@ public:
 	void setI(float I);
 	void setP(float P);
 	void setWindupGuard(float windupGuard);
+	int getPwmOut();
+	void setPwmOut(int pwmOut);
 };
 
 
