@@ -115,8 +115,8 @@ int main()
 	 rollError=Roll.updatePID(setPointY, y, inFlight);
 	 throttleError=Throttle.updatePID(setPointZ, z, inFlight);
 	 
-	 Pitch.setPwmOut(constrain((Pitch.getPwmOut()+(pitchError*100)),1000,2000));
-	 Roll.setPwmOut(constrain((Roll.getPwmOut()+(rollError*100)),1000,2000));
+	 Pitch.setPwmOut(constrain((Pitch.getPwmOut()+(pitchError*100)),14000,15000));
+	 Roll.setPwmOut(constrain((Roll.getPwmOut()+(rollError*100)),14000,15000));
 	 //Throttle.setPwmOut(constrain((Throttle.getPwmOut()+(throttleError*100)),1000,2000));
 	 //PW8<<Throttle.getPwmOut();
 	 
