@@ -11,6 +11,21 @@
 #include "GPIO.h"
 
 
+int constrain(int a, int x, int y){
+	if(a < x)
+	{
+		return x;
+	}
+	else if(a > y)
+	{
+		return y;
+	}
+	else
+	{
+		return a;
+	}
+}
+
 int main()
 {
     CameraPoseEstimator cpe;
@@ -100,10 +115,11 @@ int main()
 	 rollError=Roll.updatePID(setPointY, y, inFlight);
 	 throttleError=Throttle.updatePID(setPointZ, z, inFlight);
 	 
-	 Pitch.setPwmOut(Pitch.getPwmOut()+(pitchError*100));
-	 Roll.setPwmOut(Roll.getPwmOut()+(rollError*100));
-	 //Throttle.setPwmOut(Throttle.getPwmOut()+(throttleError*100));
+	 Pitch.setPwmOut(constrain((Pitch.getPwmOut()+(pitchError*100)),1000,2000));
+	 Roll.setPwmOut(constrain((Roll.getPwmOut()+(rollError*100)),1000,2000));
+	 //Throttle.setPwmOut(constrain((Throttle.getPwmOut()+(throttleError*100)),1000,2000));
 	 //PW8<<Throttle.getPwmOut();
+	 
 	 PWM9<<Roll.getPwmOut();
 	 PWM10<<Pitch.getPwmOut();
 	 
