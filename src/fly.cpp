@@ -28,10 +28,10 @@ int main()
     Throttle.setPwmOut(10000);
     float setPointX=0, setPointY=0, setPointZ=0;
     bool inFlight = false, prevFlightStatus=false, firstRead=true;
-    std::ofstream PWM8("/dev/pwm8");
-    std::ofstream PWM9("/dev/pwm9");
-    std::ofstream PWM10("/dev/pwm10");
-    std::ofstream PWM11("/dev/pwm11");
+    std::ofstream PWM8("/dev/pwm8"); //Throttle
+    std::ofstream PWM9("/dev/pwm9"); //Roll
+    std::ofstream PWM10("/dev/pwm10"); //Pitch
+    std::ofstream PWM11("/dev/pwm11"); //Yaw
     //float pidRoll, pidPitch, pidThrottle;
 
     
