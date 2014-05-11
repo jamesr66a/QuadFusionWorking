@@ -11,6 +11,11 @@ PID::PID() : P(1), I(1)
 	currentTime = std::chrono::high_resolution_clock::now();
 	//std::cout << "init previous time" << std::endl;
 	previousPIDTime = currentTime;
+	pwmOut=15000;
+}
+
+void PID::setPwmOut(int pwmOut){
+	this->pwmOut=pwmOut;
 }
 
 void PID::setI(float I){
@@ -23,6 +28,10 @@ void PID::setP(float P){
 
 void PID::setWindupGuard(float windupGuard){
 	this->windupGuard=windupGuard;
+}
+
+int PID::getPwmOut(){
+	return pwmOut;
 }
 
 float PID::updatePID(float targetPosition, float currentPosition, bool inFlight)
