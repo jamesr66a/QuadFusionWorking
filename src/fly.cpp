@@ -2,6 +2,7 @@
 #include <chrono>
 #include <iostream>
 #include <iomanip>
+#include <fstream>
 
 
 #include "optical_flow.h"
@@ -21,10 +22,15 @@ int main()
     std::thread ofs_thread(&OpticalFlowSensor::loop, &ofs, std::string("/dev/ttyO0"));
 	
     float x = 0, y = 0, z = 0;
+    float rollError=0, pitchError=0, throttleError=0;
     
     PID Pitch, Roll, Throttle;
     float setPointX=0, setPointY=0, setPointZ=0;
     bool inFlight = false, prevFlightStatus=false, firstRead=true;
+    std::ofstream PWM8("/dev/pwm8");
+    std::ofstream PWM0("/dev/pwm9");
+    std::ofstream PWM10("/dev/pwm10");
+    std::ofstream PWM11("/dev/pwm11");
     //float pidRoll, pidPitch, pidThrottle;
 
     
@@ -89,8 +95,15 @@ int main()
 	    */	   
 	}
 	
+	 pitchError=Pitch.updatePID(setPointX, x, inFlight);
+	 rollError=Roll.updatePID(setPointY, y, inFlight);
+	 throttleError=Throttle.updatePID(setPointZ, z, inFlight);
+	 
+	 
+	 
+	
 	//std::cout <<"X: "<< x <<" cm"<< " Y:" << y << " cm Z: " << z <<" m" << std::ends;
-	std::cout << std::setw(10) << Pitch.updatePID(setPointX, x, inFlight) << " " << std::setw(10) << Roll.updatePID(setPointY, y, inFlight) << " " << std::setw(10) << Throttle.updatePID(setPointZ, z, inFlight) << std::endl;
+	//std::cout << std::setw(10) << pitchError << " " << std::setw(10) << rollError << " " << std::setw(10) << throttleError << std::endl;
 
 	std::this_thread::sleep_for(std::chrono::milliseconds(5));
     }
