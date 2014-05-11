@@ -14,12 +14,16 @@ int main()
     CameraPoseEstimator cpe;
     OpticalFlowSensor ofs;
 
+    initGPIO(186, true);
+
     std::thread cpe_thread(&CameraPoseEstimator::continuousRead, &cpe);
     std::thread ofs_thread(&OpticalFlowSensor::loop, &ofs, "/dev/ttyO0");
 	
-    float x = 0, y = 0;
-    //float setPointX=0, setPointY=0, setPointZ=0;
-    //bool prevFlightStatus=false, firstRead=true;
+    float x = 0, y = 0, z = 0;
+
+    PID Pitch, Roll, Throttle;
+    float setPointX=0, setPointY=0, setPointZ=0;
+    bool inFlight = false, prevFlightStatus=false, firstRead=true;
     //float pidRoll, pidPitch, pidThrottle;
 
     
@@ -31,16 +35,17 @@ int main()
 
     while (true)
     {
-        //if(readGPIO(17)=='1') inFlight=true;
-        //if(readGPIO(17)=='0') inFlight=false;
+        if(readGPIO(186)=='1') inFlight=true;
+        if(readGPIO(186)=='0') inFlight=false;
         
-	//if(prevFlightStatus!=inFlight){
-	//	setPointX=x;
-	//	setPointY=y;
-
-	//}
+	if(inFlight == true && prevFlightStatus == false)
+	{
+		setPointX=x;
+		setPointY=y;
+		setPointZ = z;
+	}
 	
-	//prevFlightStatus=inFlight;
+	prevFlightStatus=inFlight;
 	
 
 	FlowData fd;
@@ -54,8 +59,8 @@ int main()
 	    //	      << std::endl;
 	    x += fd.flow_x;
 	    y += fd.flow_y;
-	    std::cout <<"X: "<< x <<"cm"<< " Y:" << y << "cm Z: " << fd.ground_distance<<"m" << std::endl;
-	    //std::cout << std::chrono::nanoseconds(dt).count()/10e6 << std::endl;
+	    z = fd.ground_distance;
+	   	    //std::cout << std::chrono::nanoseconds(dt).count()/10e6 << std::endl;
 	}
 	if (cpe.dataAvailable())
 	{
@@ -80,8 +85,14 @@ int main()
 
 		-Griffin
 
-	    */	    
+	    */	   
 	}
+	
+	std::cout <<"X: "<< x <<"cm"<< " Y:" << y << "cm Z: " << z.ground_distance<<"m";
+	std::cout << Pitch.updatePID(setPointX, x, inFlight);
+	std::cout << Roll.updatePID(setPointY, y, inFlight);
+	std::cout << Throttle.updatePID(setPointZ, z, inFlight);
+
 	std::this_thread::sleep_for(std::chrono::milliseconds(5));
     }
 }
