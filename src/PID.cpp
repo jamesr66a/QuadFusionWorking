@@ -32,7 +32,7 @@ float PID::updatePID(float targetPosition, float currentPosition, bool inFlight)
 	
 	float deltaPIDTime=(std::chrono::duration_cast<std::chrono::microseconds>(currentTime-previousPIDTime).count())/100000.0;
 	
-	std::cout<<deltaPIDTime<<std::endl;
+	//std::cout<<deltaPIDTime<<std::endl;
 
 	previousPIDTime = currentTime;
 	float error = targetPosition - currentPosition;

@@ -1,6 +1,7 @@
 #include <thread>
 #include <chrono>
 #include <iostream>
+#include <iomanip>
 
 
 #include "optical_flow.h"
@@ -89,7 +90,7 @@ int main()
 	}
 	
 	//std::cout <<"X: "<< x <<" cm"<< " Y:" << y << " cm Z: " << z <<" m" << std::ends;
-	std::cout << std::setprecision(10) << Pitch.updatePID(setPointX, x, inFlight) << std::setprecision(10) << Roll.updatePID(setPointY, y, inFlight) << std::setprecision(10) << Throttle.updatePID(setPointZ, z, inFlight) << std::endl;
+	std::cout << std::setw(10) << Pitch.updatePID(setPointX, x, inFlight) << " " << std::setw(10) << Roll.updatePID(setPointY, y, inFlight) << " " << std::setw(10) << Throttle.updatePID(setPointZ, z, inFlight) << std::endl;
 
 	std::this_thread::sleep_for(std::chrono::milliseconds(5));
     }
