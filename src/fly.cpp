@@ -124,12 +124,12 @@ int main()
 	 //Throttle.setPwmOut(constrain((Throttle.getPwmOut()+(throttleError*100)),1000,2000));
 	 //PW8<<Throttle.getPwmOut();
 	 
-	 PWM9<<Roll.getPwmOut();
-	 PWM10<<Pitch.getPwmOut();
+	 PWM9<<15000-Roll.getPwmOut();
+	 PWM10<<15000+Pitch.getPwmOut();
 	 
 	 
-	 std::cout<<"Roll: "<<Roll.getPwmOut()<<"\t";
-	 std::cout<<"Pitch: "<<Pitch.getPwmOut()<<std::endl;
+	 std::cout<<"Roll: "<<15000-Roll.getPwmOut()<<"\t";
+	 std::cout<<"Pitch: "<<15000+Pitch.getPwmOut()<<std::endl;
 	
 	//std::cout <<"X: "<< x <<" cm"<< " Y:" << y << " cm Z: " << z <<" m" << std::ends;
 	//std::cout << std::setw(10) << pitchError << " " << std::setw(10) << rollError << " " << std::setw(10) << throttleError << std::endl;
