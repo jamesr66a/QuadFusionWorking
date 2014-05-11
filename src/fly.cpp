@@ -89,9 +89,7 @@ int main()
 	}
 	
 	//std::cout <<"X: "<< x <<" cm"<< " Y:" << y << " cm Z: " << z <<" m" << std::ends;
-	std::cout << Pitch.updatePID(setPointX, x, inFlight);
-	std::cout << Roll.updatePID(setPointY, y, inFlight);
-	std::cout << Throttle.updatePID(setPointZ, z, inFlight) << std::endl;
+	std::cout << std::setprecision(10) << Pitch.updatePID(setPointX, x, inFlight) << std::setprecision(10) << Roll.updatePID(setPointY, y, inFlight) << std::setprecision(10) << Throttle.updatePID(setPointZ, z, inFlight) << std::endl;
 
 	std::this_thread::sleep_for(std::chrono::milliseconds(5));
     }
