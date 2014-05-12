@@ -40,8 +40,10 @@ int main()
     float rollError=0, pitchError=0, throttleError=0;
     
     PID Pitch, Roll, Throttle;
-    Pitch.setP(10);
-    Roll.setP(10);
+    Pitch.setP(15);
+    Roll.setP(15);
+    Pitch.setI(10);
+    Roll.setI(10);
     Throttle.setPwmOut(10000);
     float setPointX=0, setPointY=0, setPointZ=0;
     bool inFlight = false, prevFlightStatus=false, firstRead=true;
@@ -70,6 +72,8 @@ int main()
 		setPointZ = z;
 		Pitch.zeroIntegralError();
 		Roll.zeroIntegralError();
+		Pitch.setPwmOut(15000);
+		Roll.setPwmOut(15000);
 	}
 	
 	prevFlightStatus=inFlight;
@@ -116,7 +120,7 @@ int main()
 	}
 	
 	 pitchError=Pitch.updatePID(setPointX, x, inFlight);
-	 rollError=Roll.updatePID(setPointY, y, inFlight);
+	 rollError=Roll.updatePID(setPointY, -y, inFlight);
 	 throttleError=Throttle.updatePID(setPointZ, z, inFlight);
 	 
 	 //Pitch.setPwmOut(constrain((Pitch.getPwmOut()+(pitchError*100)),14000,15000));
@@ -124,12 +128,14 @@ int main()
 	 //Throttle.setPwmOut(constrain((Throttle.getPwmOut()+(throttleError*100)),1000,2000));
 	 //PW8<<Throttle.getPwmOut();
 	 
-	 PWM9<<15000-Roll.getPwmOut();
-	 PWM10<<15000+Pitch.getPwmOut();
+	 PWM9<<15000-Roll.getPwmOut() << std::flush;
+	 PWM10<<15000+Pitch.getPwmOut() << std::flush;
 	 
 	 
-	 std::cout<<"Roll: "<<15000-Roll.getPwmOut()<<"\t";
-	 std::cout<<"Pitch: "<<15000+Pitch.getPwmOut()<<std::endl;
+	 std::cout<<"Roll: "<<15121-Roll.getPwmOut()<<"\t";
+	 std::cout<<"Pitch: "<<15121+Pitch.getPwmOut()<<"\t";
+	 if(inFlight) std::cout<<"Switch Flipped";
+	 std::cout<<std::endl;
 	
 	//std::cout <<"X: "<< x <<" cm"<< " Y:" << y << " cm Z: " << z <<" m" << std::ends;
 	//std::cout << std::setw(10) << pitchError << " " << std::setw(10) << rollError << " " << std::setw(10) << throttleError << std::endl;
