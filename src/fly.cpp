@@ -138,7 +138,7 @@ int main()
 	 if(inFlight) std::cout<<"Switch Flipped";
 	 std::cout<<std::endl;
 	
-	//std::cout <<"X: "<< x <<" cm"<< " Y:" << y << " cm Z: " << z <<" m" << std::ends;
+	std::cout <<"X: "<< x <<" cm"<< " Y:" << y << " cm Z: " << z <<" m" << std::ends;
 	//std::cout << std::setw(10) << pitchError << " " << std::setw(10) << rollError << " " << std::setw(10) << throttleError << std::endl;
 
 	std::this_thread::sleep_for(std::chrono::milliseconds(5));
