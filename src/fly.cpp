@@ -130,8 +130,10 @@ int main()
 	 
 	 PWM9<<15121-Roll.getPwmOut() << std::flush;
 	 PWM10<<15121+Pitch.getPwmOut() << std::flush;
-	 PWM8<<10121+Throttle.getPwmOut()<<std::flush;
-	 
+	 //PWM8<<10121+Throttle.getPwmOut()<<std::flush;
+         PWM8<<15000<std::flush;	 
+
+
 	 std::cout<<"Roll: "<<15121-Roll.getPwmOut()<<"\t";
 	 std::cout<<"Pitch: "<<15121+Pitch.getPwmOut()<<"\t";
          std::cout<<"Throttle: "<<10121+Throttle.getPwmOut()<<"\t";
