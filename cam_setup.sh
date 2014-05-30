@@ -8,7 +8,9 @@
 
 #Live coverage 
 #LD_PRELOAD=/usr/lib/libv4l/v4l2convert.so mplayer tv:// -tv driver=v4l2:device=/dev/video6:outfmt=uyvy:width=752:height=480 -vf screenshot -vo jpeg -frames 5
-
+rmmod v4l2_common; \
+rmmod omap3_isp; \
+rmmod videodev; \
 modprobe v4l2-driver; \
 mknod /dev/video2 c 81 0; \
 chmod 777 /dev/video2
