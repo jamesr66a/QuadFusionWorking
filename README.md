@@ -1,4 +1,4 @@
-QuadFusion2
+QuadFusionWorking
 ===========
-We get stuff from some other stuff. Then we do stuff with that stuff to turn that stuff into other stuff, which in turn makes stuff happen.
+PID controller implenation running on a quadcopter. Uses a camera system to get POSE data and optical flow sensor to complement the camera system.
 
